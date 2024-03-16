@@ -3,3 +3,6 @@
 
 # ignore dbs
 *.sqlite3
+
+# ignore pycaches
+__pycache__/
