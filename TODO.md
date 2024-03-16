@@ -2,8 +2,8 @@
 
 ## Create Models
 
-[ ] Status: The status of an uptime request instance
-[ ] Service: The service an uptime is pinging
+[x] Status: The status of an uptime request instance
+[x] Service: The service an uptime is pinging
 
 ## Create URL endpoints
 
