@@ -18,3 +18,9 @@
 [ ] GET `/api/service/`: Get service or services
 
 [ ] POST `/api/service/`: Post a new service to ping
+
+## Add API Auth Token
+
+[ ] Create endpoints
+
+[ ] Add checks on views
