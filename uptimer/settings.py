@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 """
 
 from pathlib import Path
+from .utils import get_allowed_hosts
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +26,9 @@ SECRET_KEY = 'django-insecure-e26)t(os62+fh2=0m0afa!3qr0^9t73hgsy1jeq$=w+@)!%+up
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# read in allowed hosts
 
+ALLOWED_HOSTS = get_allowed_hosts(Path('allowed_hosts.txt'))
 
 # Application definition
 

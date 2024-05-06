@@ -5,6 +5,7 @@
 __pycache__
 db.sqlite3
 media
+allowed_hosts.txt
 
 # Backup files # 
 *.bak 
