@@ -2,7 +2,7 @@ from django.db import models
 
 class Service(models.Model):
     """The service being watched"""
-    name = models.TextField()
+    name = models.TextField(unique=True, primary_key=True)
     description = models.TextField()
     url = models.URLField()
     time_created = models.DateTimeField(auto_now_add=True)
