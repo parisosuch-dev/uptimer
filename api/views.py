@@ -87,7 +87,7 @@ class SingleServiceView(APIView):
 
         return Response(serializer.data, status=status.HTTP_200_OK)
 
-    def put(self, request: Request, service: str) -> Response:
+    def patch(self, request: Request, service: str) -> Response:
         """Update a specific service by name.
 
         Args:
@@ -114,7 +114,7 @@ class SingleServiceView(APIView):
                 status=status.HTTP_400_BAD_REQUEST,
             )
         # update
-        serializer = ServiceSerializer(service_obj, data=request.data)
+        serializer = ServiceSerializer(service_obj, data=request.data, partial=True)
 
         if serializer.is_valid():
             serializer.save()
