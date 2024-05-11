@@ -10,6 +10,6 @@ class Service(models.Model):
 class Status(models.Model):
     """An instance of an uptime check"""
     service = models.ForeignKey(Service, on_delete=models.CASCADE)
-    response_time = models.IntegerField() # in ms
+    response_time = models.IntegerField(null=True) # in ms
     is_up = models.BooleanField()
     time = models.DateTimeField()
