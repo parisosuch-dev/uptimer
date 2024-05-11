@@ -25,6 +25,8 @@ def post_status(service: Service) -> Union[Status | None]:
         Status: Status of service (or None if fail)
     """
     logger.debug(f"Logging service: {service.name}")
+    with open('output.txt', '+a') as f:
+        f.write('The function post_status() is being called.')
     # set time for ping
     time = datetime.now()
     # ping host
