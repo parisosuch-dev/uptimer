@@ -138,3 +138,10 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Cron Jobs
+
+CRONJOBS = [
+    # Job runs every 15 minutes
+    ("*/15 * * * *", "api.cron.log_uptimes"),
+]
