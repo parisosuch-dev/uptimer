@@ -50,7 +50,6 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "rest_framework",
-    "django_crontab",
     "corsheaders",
     "api",
 ]
@@ -138,30 +137,3 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Cron Jobs
-
-CRONJOBS = [
-    # Job runs every 1 minute
-    ("* * * * *", "api.cron.log_uptimes"),
-]
-
-# Log Settings
-
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'handlers': {
-        'console': {
-            'level': 'DEBUG',  # Set the logging level as desired
-            'class': 'logging.StreamHandler',
-        },
-    },
-    'loggers': {
-        '': {  # Root logger
-            'handlers': ['console'],
-            'level': 'DEBUG',  # Set the logging level as desired
-            'propagate': True,
-        },
-    },
-}
