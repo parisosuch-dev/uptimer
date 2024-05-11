@@ -142,3 +142,69 @@ class SingleServiceView(APIView):
                 {"message": f"Service with name '{service}' does not exist."},
                 status=status.HTTP_404_NOT_FOUND,
             )
+
+
+class StatusView(APIView):
+    """View for statuses"""
+
+    def get(self, request: Request, *args, **kwargs) -> Response:
+        """Get statuses.
+
+        Args:
+            request (Request): incoming http request
+
+        Returns:
+            Response: respective statuses
+        """
+        # get query parameters
+        service = request.query_params.get("service")
+        start = request.query_params.get("start")
+        end = request.query_params.get("end")
+        limit = request.query_params.get("limit")
+        order = request.query_params.get("order")
+
+        try:
+            # filter by service
+            if service:
+                try:
+                    Service.objects.get(name=service)
+                except Service.DoesNotExist:
+                    return Response(
+                        {"message": f"Service with name '{service}' does not exist."},
+                        status=status.HTTP_404_NOT_FOUND,
+                    )
+                query_set = Status.objects.filter(service=service)
+            else:
+                query_set = Status.objects.all()
+
+            # filter by start
+            if start:
+                query_set = query_set.filter(time__gte=start)
+
+            # filter by end
+            if end:
+                query_set = query_set.filter(time__lte=end)
+
+            # change order if exists
+            if order:
+                if order.lower() == "asc":
+                    query_set = query_set.order_by("time")
+                if order.lower() == "desc":
+                    query_set = query_set.order_by("-time")
+            else:
+                query_set = query_set.order_by("-time")
+
+            # limit set if present
+            if limit:
+                query_set = query_set[: int(limit)]
+
+        except Exception as e:
+            return Response(
+                {"message": f"There was an error filtering the statuses. Error: {e}"},
+                status=status.HTTP_400_BAD_REQUEST,
+            )
+
+        # return query set
+        serializer = StatusSerializer(query_set, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
