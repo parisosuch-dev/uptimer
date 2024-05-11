@@ -4,13 +4,16 @@ Uptime Checker
 Jobs that are run by the Django Cron Tab.
 """
 
+import logging
 from datetime import datetime
 from typing import Union
+
 import ping3
 
 from .models import Service, Status
 from .serializers import StatusSerializer
 
+logger = logging.Logger(__name__)
 
 def post_status(service: Service) -> Union[Status | None]:
     """Post a status based on the url.
@@ -21,13 +24,13 @@ def post_status(service: Service) -> Union[Status | None]:
     Returns:
         Status: Status of service (or None if fail)
     """
+    logger.debug(f"Logging service: {service.name}")
     # set time for ping
     time = datetime.now()
     # ping host
-    print(service.hostname)
     response = ping3.ping(service.hostname, unit="ms")
 
-    print(response)
+    logger.debug(f"Ping response: {response}")
 
     # determine status based on response
     if not response:
@@ -48,7 +51,7 @@ def post_status(service: Service) -> Union[Status | None]:
     if serializer.is_valid():
         status = serializer.save()
         return status
-    print(serializer.errors)
+    logger.debug(serializer.errors)
     return None
 
 def log_uptimes() -> list[Status]:

@@ -142,6 +142,26 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Cron Jobs
 
 CRONJOBS = [
-    # Job runs every 15 minutes
-    ("*/15 * * * *", "api.cron.log_uptimes"),
+    # Job runs every 1 minutes
+    ("*/1 * * * *", "api.cron.log_uptimes"),
 ]
+
+# Log Settings
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',  # Set the logging level as desired
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {  # Root logger
+            'handlers': ['console'],
+            'level': 'DEBUG',  # Set the logging level as desired
+            'propagate': True,
+        },
+    },
+}
