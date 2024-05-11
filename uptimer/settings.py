@@ -142,8 +142,8 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 # Cron Jobs
 
 CRONJOBS = [
-    # Job runs every 10 seconds
-    ("*/10 * * * * *", "api.cron.log_uptimes"),
+    # Job runs every 1 minute
+    ("* * * * *", "api.cron.log_uptimes"),
 ]
 
 # Log Settings
