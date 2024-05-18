@@ -5,6 +5,7 @@ from rest_framework.views import APIView
 
 from .models import Service, Status
 from .serializers import ServiceSerializer, StatusSerializer
+from .uptime import log_uptimes, post_status
 
 
 class ServicesView(APIView):
@@ -206,5 +207,43 @@ class StatusView(APIView):
 
         # return query set
         serializer = StatusSerializer(query_set, many=True)
+
+        return Response(serializer.data, status=status.HTTP_200_OK)
+
+    def post(self, request: Request, *args, **kwargs) -> Response:
+        """Trigger status check for all.
+
+        Args:
+            request (Request): incoming http request
+
+        Returns:
+            Response: respective statuses
+        """
+        # check if query param for service is passed and if so, just check that one
+        service = request.query_params.get("service")
+
+        if service:
+            try:
+                service_obj = Service.objects.get(name=service)
+            except Service.DoesNotExist:
+                return Response(
+                    {"message": f"Service with name '{service}' does not exist."},
+                    status=status.HTTP_404_NOT_FOUND,
+                )
+            status_obj = post_status(service_obj)
+
+            serializer = StatusSerializer(status_obj)
+
+            return Response(serializer.data, status=status.HTTP_200_OK)
+
+        try:
+            statuses = log_uptimes()
+        except:
+            Response(
+                {"message": "There was a server error trying to log uptimes."},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR,
+            )
+
+        serializer = StatusSerializer(statuses, many=True)
 
         return Response(serializer.data, status=status.HTTP_200_OK)
