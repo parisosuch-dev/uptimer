@@ -9,7 +9,7 @@ class ServiceSerializer(serializers.ModelSerializer):
         fields = [
             "name",
             "description",
-            "url",
+            "hostname",
             "time_created",
         ]
 
