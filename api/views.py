@@ -36,7 +36,7 @@ class ServicesView(APIView):
         """
         service_name = request.data.get("name")
         service_description = request.data.get("description")
-        service_url = request.data.get("url")
+        service_hostname = request.data.get("hostname")
 
         services = Service.objects.filter(name=service_name)
 
@@ -50,7 +50,7 @@ class ServicesView(APIView):
         data = {
             "name": service_name,
             "description": "" if service_description is None else service_description,
-            "url": service_url,
+            "hostname": service_hostname,
         }
 
         # serialize and validate data
