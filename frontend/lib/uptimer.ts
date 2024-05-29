@@ -1,5 +1,4 @@
 import axios from "axios";
-import { error } from "console";
 
 export interface Service {
   name: string;
