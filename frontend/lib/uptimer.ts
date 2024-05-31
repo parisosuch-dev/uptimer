@@ -16,7 +16,9 @@ export interface Status {
 
 // get services
 export const getServices = async () => {
-  let endpoint = process.env.UPTIMER_ADDRESS + "/api/service/";
+  let endpoint = process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/service/";
+
+  console.log(`Hitting this endpoint: ${endpoint}`);
 
   let res = await axios.get<Service[]>(endpoint);
 
@@ -33,7 +35,7 @@ interface StatusQueryParams {
 
 // get statuses
 export const getStatuses = async (options?: StatusQueryParams) => {
-  let endpoint = process.env.UPTIMER_ADDRESS + "/api/status/";
+  let endpoint = process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/status/";
 
   if (options) {
     let filteredParams = Object.entries(options).reduce((acc, [key, value]) => {

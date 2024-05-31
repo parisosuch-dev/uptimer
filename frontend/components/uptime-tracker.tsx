@@ -1,7 +1,7 @@
 import { Status } from "@/lib/uptimer";
 import { Card, Tracker, type Color } from "@tremor/react";
 
-export default function UptimeTracker(statuses: Status[]) {
+export default function UptimeTracker({ statuses }: { statuses: Status[] }) {
   let service: string = "";
   let downTimes = 0;
 
@@ -12,13 +12,15 @@ export default function UptimeTracker(statuses: Status[]) {
     }
     return {
       color: status.is_up ? "emerald" : "rose",
-      tooltip: status.response_time ? String(status.response_time) : "0",
+      tooltip: status.response_time
+        ? String(status.response_time) + " ms"
+        : "down",
     };
   });
   let uptime = ((statuses.length - downTimes) / statuses.length) * 100;
 
   return (
-    <Card className="mx-auto max-w-md">
+    <Card className="mx-auto max-w-full">
       <p className="text-tremor-default flex items-center justify-between">
         <span className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
           {service}
