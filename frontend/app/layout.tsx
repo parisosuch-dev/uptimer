@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { Inter } from "next/font/google";
 import "./globals.css";
 
@@ -16,7 +17,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>{children}</body>
-    </html>
+      <body className={inter.className}>
+        <div className="w-full flex justify-between py-8 px-16">
+          <Link href="/" className="text-2xl font-bold">uptimer.</Link>
+          <Link href="/services" className="text-xl font-medium">my services</Link>
+        </div>
+        {children}
+      </body>
+    </html >
   );
 }

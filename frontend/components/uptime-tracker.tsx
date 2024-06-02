@@ -1,17 +1,22 @@
-import { Status } from "@/lib/uptimer";
-import { Card, Tracker, type Color } from "@tremor/react";
+import { Service, Status, getStatuses } from "@/lib/uptimer";
+import Link from "next/link";
+import { Card, Tracker } from "@tremor/react";
 
-export default function UptimeTracker({ statuses }: { statuses: Status[] }) {
-  let service: string = "";
+export default async function UptimeTracker({ service, limit }: { service: Service, limit: number }) {
+  // get the statuses for that service
+  const statuses = await getStatuses({ service: service.name, limit: limit }).then((res) => {
+    return res;
+  });
+
+
   let downTimes = 0;
 
   let data = statuses.map((status) => {
-    service = status.service;
     if (!status.is_up) {
       downTimes++;
     }
     return {
-      color: status.is_up ? "emerald" : "rose",
+      color: (status.is_up && status.response_time < 200) ? "emerald" : (status.is_up && status.response_time >= 200) ? "amber" : "rose",
       tooltip: status.response_time
         ? String(status.response_time) + " ms"
         : "down",
@@ -22,9 +27,9 @@ export default function UptimeTracker({ statuses }: { statuses: Status[] }) {
   return (
     <Card className="mx-auto max-w-full">
       <p className="text-tremor-default flex items-center justify-between">
-        <span className="text-tremor-content-strong dark:text-dark-tremor-content-strong font-medium">
-          {service}
-        </span>
+        <Link className="font-medium " href={`/services/${service.name}`}>
+          {service.name}
+        </Link>
         <span className="text-tremor-content dark:text-dark-tremor-content">
           uptime {uptime}%
         </span>
