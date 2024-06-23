@@ -55,9 +55,9 @@ export const getStatuses = async (options?: StatusQueryParams) => {
 // delete a service
 export const deleteService = async (service: string) => {
   let endpoint =
-    process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/service/" + service;
+    process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/service/" + service + "/";
 
-  var res = await axios.get(endpoint);
+  var res = await axios.delete(endpoint);
 
   return res;
 };

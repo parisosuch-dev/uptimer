@@ -6,17 +6,21 @@ import { Service } from "@/lib/uptimer";
 import { GoTrash, GoPencil } from "react-icons/go";
 import { Button, Dialog, DialogPanel } from '@tremor/react';
 import { deleteService } from "@/lib/uptimer";
+import { useRouter } from "next/router";
 
 export default function ServiceCard({ service }: { service: Service }) {
     const [editIsOpen, setEditIsOpen] = useState(false);
     const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 
+    const [deleteError, setDeleteError] = useState("");
+
     const onDeleteService = () => {
-        deleteService(service.name).then((res) => {
+        deleteService(service.name + '123').then((res) => {
             console.log(res);
         }).catch((err) => {
             console.error(err);
-        })
+        });
+
     }
 
     return (
@@ -50,6 +54,7 @@ export default function ServiceCard({ service }: { service: Service }) {
                     <Dialog open={deleteIsOpen} onClose={() => setDeleteIsOpen(false)} static={true} className="z-[100]">
                         <DialogPanel className="max-w-lg space-y-4 text-center">
                             <p>Are you sure you want to delete <span className="font-medium">{service.name}</span>?</p>
+                            {deleteError ? <p className="text-rose-400">There was an error deleting service. Error {deleteError}</p> : null}
                             <div className="flex justify-center space-x-8">
                                 <Button variant="light" color="rose" onClick={() => { onDeleteService() }}>Yes</Button>
                                 <Button variant="secondary" color="gray" onClick={() => setDeleteIsOpen(false)}>
