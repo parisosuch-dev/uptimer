@@ -17,13 +17,17 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-gray-100`}>
         <div className="w-full flex justify-between py-8 px-16">
-          <Link href="/" className="text-2xl font-bold">uptimer.</Link>
-          <Link href="/services" className="text-xl font-medium">my services</Link>
+          <Link href="/" className="text-2xl font-bold">
+            uptimer.
+          </Link>
+          <Link href="/services" className="text-xl font-medium">
+            my services
+          </Link>
         </div>
         {children}
       </body>
-    </html >
+    </html>
   );
 }
