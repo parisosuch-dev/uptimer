@@ -52,6 +52,15 @@ export const getStatuses = async (options?: StatusQueryParams) => {
   return res.data;
 };
 
+// get latest statuses from API
+export const getLatestStatuses = async () => {
+  let endpoint = process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/status/";
+
+  var res = await axios.post<Status[]>(endpoint);
+
+  return res.data;
+};
+
 // delete a service
 export const deleteService = async (service: string) => {
   let endpoint =

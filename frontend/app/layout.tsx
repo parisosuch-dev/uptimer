@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} bg-gray-100`}>
+      <body className={`${inter.className} bg-gray-100 min-h-screen`}>
         <div className="w-full flex justify-between py-8 px-16">
           <Link href="/" className="text-2xl font-bold">
             uptimer.
