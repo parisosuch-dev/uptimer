@@ -8,11 +8,11 @@ export default async function Home() {
   const latestStatuses: Status[] = await getLatestStatuses();
 
   return (
-    <main className="flex flex-1 flex-row items-center space-y-12 p-12">
+    <main className="flex flex-1 flex-row space-x-4 p-12">
       <div className="w-1/2">
         <ServersUpPercentage statuses={latestStatuses} />
       </div>
-      <div className="w-1/2 p-4 space-y-4">
+      <div className="w-1/2 space-y-4">
         {services.map((service) => (
           <UptimeTracker key={service.name} service={service} limit={48} />
         ))}

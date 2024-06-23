@@ -19,24 +19,34 @@ export default function ServersUpPercentage({
   let percentage = ((statuses.length - downTimes) / statuses.length) * 100;
 
   let color = "emerald";
-  if (percentage === 0) {
+  if (percentage != 100) {
     color = "rose";
-  } else if (percentage < 100) {
-    color = "amber";
   }
 
   return (
-    <Card className="flex w-full justify-around bg-blue-400">
-      <div className="w-full flex bg-blue-100">
+    <Card className="flex w-full justify-around">
+      <div className="w-full flex flex-col overflow-y-auto">
         <h1 className="font-medium text-xl">Latest Server Status</h1>
+        <div className="space-y-1 pt-2 w-1/2">
+          {statuses.map((status) => (
+            <p
+              key={status.service}
+              className={`bg-${
+                status.is_up ? "emerald-100" : "rose-100"
+              } rounded-lg px-2`}
+            >
+              {status.service}
+            </p>
+          ))}
+        </div>
       </div>
-      <div className="w-1/4 bg-blue-200 text-center">
+      <div className="w-1/4 text-center">
         <ProgressCircle value={percentage} size="xl" color={color}>
           <span className="text-xl font-medium text-slate-700">
             {percentage.toFixed(2)}%
           </span>
         </ProgressCircle>
-        <p className="font-light">statuses up</p>
+        <p className="font-light text-tremor-content">statuses up</p>
       </div>
     </Card>
   );
