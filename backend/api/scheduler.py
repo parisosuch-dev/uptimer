@@ -18,6 +18,7 @@ def start_scheduler():
     else:
         seconds = int(period)
 
+    print(f"Periodicity of ping: {seconds}s")
     scheduler = BackgroundScheduler()
     scheduler.add_job(log_uptimes, "interval", seconds=seconds)
 
