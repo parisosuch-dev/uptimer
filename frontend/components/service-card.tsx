@@ -8,6 +8,7 @@ import { Button, Dialog, DialogPanel } from "@tremor/react";
 import { deleteService } from "@/lib/uptimer";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
+import Link from "next/link";
 
 export default function ServiceCard({ service }: { service: Service }) {
   const [editIsOpen, setEditIsOpen] = useState(false);
@@ -35,7 +36,12 @@ export default function ServiceCard({ service }: { service: Service }) {
     <Card className="max-w-full">
       <div className="flex justify-between items-center">
         <div className="w-2/3">
-          <p className="text-lg font-medium">{service.name}</p>
+          <Link
+            className="text-lg font-medium hover:underline"
+            href={`/services/${service.name}`}
+          >
+            {service.name}
+          </Link>
         </div>
         <div className="flex flex-row space-x-2 w-1/3 justify-end">
           <button
@@ -79,6 +85,7 @@ export default function ServiceCard({ service }: { service: Service }) {
                 Are you sure you want to delete{" "}
                 <span className="font-medium">{service.name}</span>?
               </p>
+              <p>This will remove all data about this service.</p>
               {deleteError ? (
                 <p className="text-rose-600">
                   There was an error deleting service: {deleteError}
