@@ -35,13 +35,16 @@ export default function ServiceCard({ service }: { service: Service }) {
   return (
     <Card className="max-w-full">
       <div className="flex justify-between items-center">
-        <div className="w-2/3">
+        <div className="w-2/3 flex flex-row items-center space-x-2">
           <Link
             className="text-lg font-medium hover:underline"
             href={`/services/${service.name}`}
           >
             {service.name}
           </Link>
+          <p className="text-xs bg-gray-100 px-1 rounded-lg">
+            {service.hostname}
+          </p>
         </div>
         <div className="flex flex-row space-x-2 w-1/3 justify-end">
           <button
