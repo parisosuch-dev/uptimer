@@ -14,7 +14,7 @@ export default async function UptimeTracker({
     service: service.name,
     limit: limit,
   }).then((res) => {
-    return res;
+    return res.reverse();
   });
 
   let downTimes = 0;
@@ -28,8 +28,8 @@ export default async function UptimeTracker({
         status.is_up && status.response_time < 200
           ? "emerald"
           : status.is_up && status.response_time >= 200
-          ? "amber"
-          : "rose",
+            ? "amber"
+            : "rose",
       tooltip: status.response_time
         ? String(status.response_time) + " ms"
         : "down",
