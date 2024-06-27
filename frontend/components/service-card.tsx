@@ -5,7 +5,10 @@ import { Card } from "@tremor/react";
 import { editService, Service } from "@/lib/uptimer";
 import { GoTrash, GoPencil } from "react-icons/go";
 import {
-  Button, Dialog, DialogPanel, Textarea,
+  Button,
+  Dialog,
+  DialogPanel,
+  Textarea,
   TextInput,
 } from "@tremor/react";
 import { deleteService } from "@/lib/uptimer";
@@ -17,8 +20,8 @@ export default function ServiceCard({ service }: { service: Service }) {
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
 
-  const [hostname, setHostName] = useState('');
-  const [description, setDescription] = useState('');
+  const [hostname, setHostName] = useState("");
+  const [description, setDescription] = useState("");
 
   const router = useRouter();
 
@@ -45,25 +48,31 @@ export default function ServiceCard({ service }: { service: Service }) {
   const onEditService = () => {
     let data = {
       hostname: service.hostname,
-      description: service.description
-    }
+      description: service.description,
+    };
     if (hostname) {
-      data.hostname = hostname
+      data.hostname = hostname;
     }
     if (description) {
-      data.description = description
+      data.description = description;
     }
-    editService(service.name, data).then((res) => {
-      router.refresh();
+    if (!hostname && !description) {
       setEditIsOpen(false);
-    }).catch((err) => {
-      if (err.response) {
-        setEditError(err.response?.data.message);
-      } else {
-        setEditError(err);
-      }
-    });
-  }
+      return;
+    }
+    editService(service.name, data)
+      .then((res) => {
+        router.refresh();
+        setEditIsOpen(false);
+      })
+      .catch((err) => {
+        if (err.response) {
+          setEditError(err.response?.data.message);
+        } else {
+          setEditError(err);
+        }
+      });
+  };
 
   return (
     <Card className="max-w-full">
@@ -119,7 +128,11 @@ export default function ServiceCard({ service }: { service: Service }) {
                     onChange={(e) => setDescription(e.target.value)}
                   />
                 </div>
-                {editError ? <p className="text-rose-500 font-medium text-center">{editError}</p> : null}
+                {editError ? (
+                  <p className="text-rose-500 font-medium text-center">
+                    {editError}
+                  </p>
+                ) : null}
                 <div className="flex justify-end space-x-4">
                   <Button color="gray" onClick={onEditService}>
                     Submit
