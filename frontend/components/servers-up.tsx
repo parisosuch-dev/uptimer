@@ -27,6 +27,9 @@ export default function ServersUpPercentage({
     <Card className="flex w-full justify-around">
       <div className="w-full flex flex-col overflow-y-auto">
         <h1 className="font-medium text-xl">Latest Server Status</h1>
+        <p className="text-light text-sm text-tremor-content">
+          last checked @ {new Date(statuses[0].time).toLocaleTimeString()}
+        </p>
         <div className="space-y-1 pt-2 w-1/2">
           {statuses.map((status) => (
             <p
