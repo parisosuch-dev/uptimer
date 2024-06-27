@@ -12,7 +12,7 @@ export default async function Home() {
       <div className="w-1/2">
         <ServersUpPercentage statuses={latestStatuses} />
       </div>
-      <div className="w-1/2 space-y-4">
+      <div className="w-1/2 space-y-4 max-h-[650px] overflow-y-scroll">
         {services.map((service) => (
           <UptimeTracker key={service.name} service={service} limit={48} />
         ))}
