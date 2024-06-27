@@ -2,6 +2,7 @@
 import { Status } from "@/lib/uptimer";
 import { Card } from "@tremor/react";
 import { ProgressCircle } from "@tremor/react";
+import Link from "next/link";
 
 export default function ServersUpPercentage({
   statuses,
@@ -30,16 +31,19 @@ export default function ServersUpPercentage({
         <p className="text-light text-sm text-tremor-content">
           last checked @ {new Date(statuses[0].time).toLocaleTimeString()}
         </p>
-        <div className="space-y-1 pt-2 w-1/2">
+        <div className="flex flex-col space-y-1 pt-2 w-1/2">
           {statuses.map((status) => (
-            <p
+            <Link
               key={status.service}
               className={`bg-${
-                status.is_up ? "emerald-100" : "rose-100"
+                status.is_up
+                  ? "emerald-100 hover:bg-emerald-200 duration-300 transform ease-in-out"
+                  : "rose-100 hover:bg-rose-200"
               } rounded-lg px-2`}
+              href={`/services/${status.service}`}
             >
               {status.service}
-            </p>
+            </Link>
           ))}
         </div>
       </div>
