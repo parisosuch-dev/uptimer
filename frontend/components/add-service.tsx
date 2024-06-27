@@ -10,7 +10,6 @@ import {
 } from "@tremor/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { AxiosError } from "axios";
 
 export default function AddServiceButton() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
