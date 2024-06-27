@@ -10,6 +10,7 @@ import {
 } from "@tremor/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { AxiosError } from "axios";
 
 export default function AddServiceButton() {
   const [dialogIsOpen, setDialogIsOpen] = useState(false);
@@ -22,13 +23,16 @@ export default function AddServiceButton() {
   const router = useRouter();
 
   const handleSubmit = async () => {
-    let res = await addService(serviceName, hostName, description);
-
-    if (res.status != 200) {
-      setErrorMessage(res.data.message);
-    }
-
-    router.refresh();
+    addService(serviceName, hostName, description).then((res) => {
+      router.refresh();
+      setDialogIsOpen(false);
+    }).catch((err) => {
+      if (err.response) {
+        setErrorMessage(err.response?.data.message);
+      } else {
+        setErrorMessage(err);
+      }
+    })
   };
 
   return (
@@ -38,7 +42,10 @@ export default function AddServiceButton() {
       </Button>
       <Dialog
         open={dialogIsOpen}
-        onClose={() => setDialogIsOpen(false)}
+        onClose={() => {
+          setDialogIsOpen(false);
+          setErrorMessage("");
+        }}
         static={true}
         className="z-[100]"
       >
@@ -70,7 +77,7 @@ export default function AddServiceButton() {
                 onChange={(e) => setDescription(e.target.value)}
               />
             </div>
-            {errorMessage ? <p>{errorMessage}</p> : null}
+            {errorMessage ? <p className="text-rose-500 font-medium text-center">{errorMessage}</p> : null}
             <div className="flex justify-end space-x-4">
               <Button color="gray" onClick={handleSubmit}>
                 Submit
@@ -78,7 +85,10 @@ export default function AddServiceButton() {
               <Button
                 variant="secondary"
                 color="gray"
-                onClick={() => setDialogIsOpen(false)}
+                onClick={() => {
+                  setDialogIsOpen(false);
+                  setErrorMessage("");
+                }}
               >
                 Cancel
               </Button>
