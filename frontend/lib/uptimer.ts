@@ -72,7 +72,6 @@ export const deleteService = async (service: string) => {
 };
 
 // add a service
-
 export const addService = async (
   name: string,
   hostname: string,
@@ -85,6 +84,17 @@ export const addService = async (
     hostname: hostname,
     description: description,
   });
+
+  return res;
+};
+
+export const editService = async (
+  service: string,
+  data: { hostname?: string; description?: string }
+) => {
+  let endpoint =
+    process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/service/" + service + "/";
+  var res = await axios.patch(endpoint, data);
 
   return res;
 };

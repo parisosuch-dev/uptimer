@@ -2,9 +2,12 @@
 
 import { useState } from "react";
 import { Card } from "@tremor/react";
-import { Service } from "@/lib/uptimer";
+import { editService, Service } from "@/lib/uptimer";
 import { GoTrash, GoPencil } from "react-icons/go";
-import { Button, Dialog, DialogPanel } from "@tremor/react";
+import {
+  Button, Dialog, DialogPanel, Textarea,
+  TextInput,
+} from "@tremor/react";
 import { deleteService } from "@/lib/uptimer";
 import { useRouter } from "next/navigation";
 import { AxiosError } from "axios";
@@ -13,15 +16,21 @@ import Link from "next/link";
 export default function ServiceCard({ service }: { service: Service }) {
   const [editIsOpen, setEditIsOpen] = useState(false);
   const [deleteIsOpen, setDeleteIsOpen] = useState(false);
+
+  const [hostname, setHostName] = useState('');
+  const [description, setDescription] = useState('');
+
   const router = useRouter();
 
   const [deleteError, setDeleteError] = useState("");
+  const [editError, setEditError] = useState("");
 
+  // TODO: this is redundant and can be placed in the arrow function
   const onDeleteService = () => {
     deleteService(service.name)
       .then((res) => {
-        console.log(res);
         router.refresh();
+        setDeleteIsOpen(false);
       })
       .catch((err: AxiosError) => {
         if (err.response?.status == 404) {
@@ -31,6 +40,30 @@ export default function ServiceCard({ service }: { service: Service }) {
         }
       });
   };
+
+  // TODO: this is redundant and can be placed in the arrow function
+  const onEditService = () => {
+    let data = {
+      hostname: service.hostname,
+      description: service.description
+    }
+    if (hostname) {
+      data.hostname = hostname
+    }
+    if (description) {
+      data.description = description
+    }
+    editService(service.name, data).then((res) => {
+      router.refresh();
+      setEditIsOpen(false);
+    }).catch((err) => {
+      if (err.response) {
+        setEditError(err.response?.data.message);
+      } else {
+        setEditError(err);
+      }
+    });
+  }
 
   return (
     <Card className="max-w-full">
@@ -66,14 +99,43 @@ export default function ServiceCard({ service }: { service: Service }) {
             static={true}
             className="z-[100]"
           >
-            <DialogPanel className="max-w-lg h-64">
-              <Button
-                variant="light"
-                className="mx-auto flex items-center"
-                onClick={() => setEditIsOpen(false)}
-              >
-                Close
-              </Button>
+            <DialogPanel className="max-w-lg space-y-4">
+              <h1 className="text-xl font-bold text-center">
+                Edit &apos;{service.name}&apos;
+              </h1>
+              <div className="flex flex-col space-y-4 pt-2 text-left">
+                <div>
+                  <label className="font-medium">Host</label>
+                  <TextInput
+                    type="text"
+                    placeholder={service.hostname}
+                    onChange={(e) => setHostName(e.target.value)}
+                  />
+                </div>
+                <div>
+                  <label className="font-medium">Description</label>
+                  <Textarea
+                    placeholder={service.description}
+                    onChange={(e) => setDescription(e.target.value)}
+                  />
+                </div>
+                {editError ? <p className="text-rose-500 font-medium text-center">{editError}</p> : null}
+                <div className="flex justify-end space-x-4">
+                  <Button color="gray" onClick={onEditService}>
+                    Submit
+                  </Button>
+                  <Button
+                    variant="secondary"
+                    color="gray"
+                    onClick={() => {
+                      setEditIsOpen(false);
+                      setEditError("");
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
             </DialogPanel>
           </Dialog>
           {/* dialog for delete */}
@@ -84,10 +146,9 @@ export default function ServiceCard({ service }: { service: Service }) {
             className="z-[100]"
           >
             <DialogPanel className="max-w-lg space-y-4 text-center">
-              <p>
-                Are you sure you want to delete{" "}
-                <span className="font-medium">{service.name}</span>?
-              </p>
+              <h1 className="text-xl font-bold text-center">
+                Are you sure you want to delete &apos;{service.name}&apos;?
+              </h1>
               <p>This will remove all data about this service.</p>
               {deleteError ? (
                 <p className="text-rose-600">
