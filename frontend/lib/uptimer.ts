@@ -70,3 +70,21 @@ export const deleteService = async (service: string) => {
 
   return res;
 };
+
+// add a service
+
+export const addService = async (
+  name: string,
+  hostname: string,
+  description: string
+) => {
+  let endpoint = process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + "/api/service/";
+
+  var res = await axios.post(endpoint, {
+    name: name,
+    hostname: hostname,
+    description: description,
+  });
+
+  return res;
+};
