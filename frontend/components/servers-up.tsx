@@ -38,7 +38,7 @@ export default function ServersUpPercentage({
               className={`bg-${
                 status.is_up
                   ? "emerald-100 hover:bg-emerald-200 duration-300 transform ease-in-out"
-                  : "rose-100 hover:bg-rose-200"
+                  : "rose-100 hover:bg-rose-200 duration-300 transform ease-in-out"
               } rounded-lg px-2`}
               href={`/services/${status.service}`}
             >
