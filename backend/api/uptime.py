@@ -5,7 +5,7 @@ Jobs that are run by the Django Cron Tab.
 """
 
 import os
-from datetime import date, timedelta
+from datetime import datetime, date, timedelta
 from pathlib import Path
 from typing import Union
 
