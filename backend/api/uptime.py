@@ -4,13 +4,19 @@ Uptime Checker
 Jobs that are run by the Django Cron Tab.
 """
 
-from datetime import datetime
+import os
+from datetime import date, timedelta
+from pathlib import Path
 from typing import Union
 
 import ping3
+from dotenv import load_dotenv
 
 from .models import Service, Status
 from .serializers import StatusSerializer
+
+if Path(".env").exists():
+    load_dotenv(".env")
 
 
 def post_status(service: Service) -> Union[Status | None]:
@@ -66,3 +72,23 @@ def log_uptimes() -> list[Status]:
         statuses.append(status)
 
     return statuses
+
+
+def delete_uptimes() -> None:
+    """Delete all uptimes past retention period"""
+    # check for rentention in .env
+    retention = os.getenv("UPTIMER_RETENTION_PERIOD")
+
+    if retention is None:
+        retention = 90
+
+    # delete all uptimes greater than today - retention
+    today = date.today()
+    cutoff_date = (today - timedelta(days=retention)).isoformat()
+
+    uptimes = Status.objects.filter(time__lt=cutoff_date)
+
+    try:
+        uptimes.delete()
+    except Exception as e:
+        print(f"There was an error trying to delete uptimes: {e}")
