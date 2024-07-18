@@ -36,8 +36,8 @@ export default function ServersUpPercentage({
             <Link
               key={status.service}
               className={`bg-${status.is_up
-                  ? "emerald-100 hover:bg-emerald-200 duration-300 transform ease-in-out"
-                  : "rose-100 hover:bg-rose-200 duration-300 transform ease-in-out"
+                ? "emerald-100 hover:bg-emerald-200 duration-300 transform ease-in-out"
+                : "rose-100 hover:bg-rose-200 duration-300 transform ease-in-out"
                 } rounded-lg px-2`}
               href={`/services/${status.service}`}
             >
@@ -52,7 +52,7 @@ export default function ServersUpPercentage({
             {percentage.toFixed(2)}%
           </span>
         </ProgressCircle>
-        <p className="font-light text-tremor-content">services up</p>
+        <p className="font-light text-tremor-content pt-2">services up</p>
       </div>
     </Card>
   );
