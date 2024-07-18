@@ -25,14 +25,21 @@ export default function ServersUpPercentage({
   }
 
   return (
-    <Card className="flex w-full justify-around">
-      <div className="w-full flex flex-col overflow-y-auto">
-        <h1 className="font-medium text-xl">Latest Server Status</h1>
-        <p className="text-light text-sm text-tremor-content">
-          last checked @ {new Date(statuses[0].time).toLocaleTimeString()}
-        </p>
-        <div className="flex flex-col space-y-1 pt-2 w-1/2">
-          {statuses.map((status) => (
+    <div className="flex w-full">
+      <Card>
+
+      </Card>
+      <Card>
+
+      </Card>
+      <Card className="flex w-full justify-around">
+        <div className="w-full flex flex-col overflow-y-auto">
+          <h1 className="font-medium text-xl">Latest Server Status</h1>
+          <p className="text-light text-sm text-tremor-content">
+            last checked @ {new Date(statuses[0].time).toLocaleTimeString()}
+          </p>
+          <div className="flex flex-col space-y-1 pt-2 w-1/2">
+            {/* {statuses.map((status) => (
             <Link
               key={status.service}
               className={`bg-${status.is_up
@@ -43,17 +50,19 @@ export default function ServersUpPercentage({
             >
               {status.service}
             </Link>
-          ))}
+          ))} */}
+          </div>
         </div>
-      </div>
-      <div className="w-1/4 text-center">
-        <ProgressCircle value={percentage} size="xl" color={color}>
-          <span className="text-xl font-medium text-slate-700">
-            {percentage.toFixed(2)}%
-          </span>
-        </ProgressCircle>
-        <p className="font-light text-tremor-content pt-2">services up</p>
-      </div>
-    </Card>
+        <div className="w-full text-center">
+          <ProgressCircle value={percentage} size="lg" color={color}>
+            <span className="text-xl font-medium text-slate-700">
+              {percentage.toFixed(2)}%
+            </span>
+          </ProgressCircle>
+          <p className="font-light text-tremor-content pt-2">services up</p>
+        </div>
+      </Card>
+    </div>
+
   );
 }
