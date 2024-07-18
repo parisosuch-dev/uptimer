@@ -3,8 +3,9 @@ import colors from "tailwindcss/colors";
 
 const config: Config = {
   content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-
+    "./app/**/*.{js,ts,jsx,tsx,mdx}",
+    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
+    "./components/**/*.{js,ts,jsx,tsx,mdx}",
     // Path to Tremor module
     "./node_modules/@tremor/**/*.{js,ts,jsx,tsx}",
   ],
@@ -12,6 +13,10 @@ const config: Config = {
     transparent: "transparent",
     current: "currentColor",
     extend: {
+      fontFamily: {
+        "geist-sans": ["var(--font-geist-sans)"],
+        "geist-mono": ["var(--font-geist-mono)"],
+      },
       colors: {
         // light mode
         tremor: {

@@ -2,7 +2,6 @@
 import { Status } from "@/lib/uptimer";
 import { Card } from "@tremor/react";
 import { ProgressCircle } from "@tremor/react";
-import Link from "next/link";
 
 export default function ServersUpPercentage({
   statuses,
@@ -25,44 +24,39 @@ export default function ServersUpPercentage({
   }
 
   return (
-    <div className="flex w-full">
-      <Card>
-
-      </Card>
-      <Card>
-
-      </Card>
-      <Card className="flex w-full justify-around">
-        <div className="w-full flex flex-col overflow-y-auto">
-          <h1 className="font-medium text-xl">Latest Server Status</h1>
-          <p className="text-light text-sm text-tremor-content">
-            last checked @ {new Date(statuses[0].time).toLocaleTimeString()}
+    <div className="flex h-full w-full space-x-2">
+      <Card className="h-full w-full flex flex-col justify-center text-center">
+        <div className="flex items-center justify-center h-full">
+          <p className="text-4xl font-geist-mono font-medium text-slate-700">
+            {new Date(statuses[0].time).toLocaleTimeString()}
           </p>
-          <div className="flex flex-col space-y-1 pt-2 w-1/2">
-            {/* {statuses.map((status) => (
-            <Link
-              key={status.service}
-              className={`bg-${status.is_up
-                ? "emerald-100 hover:bg-emerald-200 duration-300 transform ease-in-out"
-                : "rose-100 hover:bg-rose-200 duration-300 transform ease-in-out"
-                } rounded-lg px-2`}
-              href={`/services/${status.service}`}
-            >
-              {status.service}
-            </Link>
-          ))} */}
-          </div>
         </div>
-        <div className="w-full text-center">
+        <div className="w-full">
+          <p className="text-tremor-content">last checked</p>
+        </div>
+      </Card>
+      <Card className="h-full w-full flex flex-col justify-center text-center">
+        <div className="flex items-center justify-center h-full">
+          <p className="text-4xl font-medium font-geist-mono text-slate-700">
+            {downTimes}
+          </p>
+        </div>
+        <div className="w-full">
+          <p className="text-tremor-content">services down</p>
+        </div>
+      </Card>
+      <Card className="w-full flex flex-col items-center justify-center h-full text-center">
+        <div className="flex items-center justify-center h-full">
           <ProgressCircle value={percentage} size="lg" color={color}>
-            <span className="text-xl font-medium text-slate-700">
+            <span className="text-xl font-medium font-geist-mono text-slate-700">
               {percentage.toFixed(2)}%
             </span>
           </ProgressCircle>
-          <p className="font-light text-tremor-content pt-2">services up</p>
+        </div>
+        <div className="w-full">
+          <p className="text-tremor-content pt-2">services up</p>
         </div>
       </Card>
     </div>
-
   );
 }

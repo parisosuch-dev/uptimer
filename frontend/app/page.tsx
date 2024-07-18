@@ -8,7 +8,7 @@ export default async function Home() {
   const latestStatuses: Status[] = await getLatestStatuses();
 
   return (
-    <main className="flex flex-1 flex-col items-center space-y-2 w-full min-h-0 p-12">
+    <main className="flex flex-1 flex-col items-center space-y-2 w-full min-h-0 p-8">
       <div className="w-1/2">
         <ServersUpPercentage statuses={latestStatuses} />
       </div>
@@ -17,6 +17,6 @@ export default async function Home() {
           <UptimeTracker key={service.name} service={service} limit={48} />
         ))}
       </div>
-    </main >
+    </main>
   );
 }
