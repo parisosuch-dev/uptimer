@@ -27,7 +27,7 @@ export default function ServersUpPercentage({
     <div className="flex h-full w-full space-x-2">
       <Card className="h-full w-full flex flex-col justify-center text-center">
         <div className="flex items-center justify-center h-full">
-          <p className="text-4xl font-geist-mono font-medium text-slate-700">
+          <p className="text-4xl font-mono font-medium text-slate-700">
             {new Date(statuses[0].time).toLocaleTimeString()}
           </p>
         </div>
@@ -37,7 +37,7 @@ export default function ServersUpPercentage({
       </Card>
       <Card className="h-full w-full flex flex-col justify-center text-center">
         <div className="flex items-center justify-center h-full">
-          <p className="text-4xl font-medium font-geist-mono text-slate-700">
+          <p className="text-4xl font-medium font-mono text-slate-700">
             {downTimes}
           </p>
         </div>
@@ -48,7 +48,7 @@ export default function ServersUpPercentage({
       <Card className="w-full flex flex-col items-center justify-center h-full text-center">
         <div className="flex items-center justify-center h-full">
           <ProgressCircle value={percentage} size="lg" color={color}>
-            <span className="text-xl font-medium font-geist-mono text-slate-700">
+            <span className="text-xl font-medium font-mono text-slate-700">
               {percentage.toFixed(2)}%
             </span>
           </ProgressCircle>

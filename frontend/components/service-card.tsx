@@ -84,7 +84,7 @@ export default function ServiceCard({ service }: { service: Service }) {
           >
             {service.name}
           </Link>
-          <p className="text-xs bg-gray-100 px-1 rounded-lg font-geist-mono">
+          <p className="text-xs bg-gray-100 px-1 rounded-lg font-mono">
             {service.hostname}
           </p>
         </div>

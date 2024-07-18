@@ -49,9 +49,7 @@ export default async function UptimeTracker({
         >
           {service.name}
         </Link>
-        <span className="text-tremor-content font-geist-mono">
-          uptime {uptime}%
-        </span>
+        <span className="text-tremor-content font-mono">uptime {uptime}%</span>
       </p>
       {statuses ? (
         <Tracker data={data} className="mt-2" />

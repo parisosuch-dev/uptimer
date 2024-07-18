@@ -14,8 +14,8 @@ const config: Config = {
     current: "currentColor",
     extend: {
       fontFamily: {
-        "geist-sans": ["var(--font-geist-sans)"],
-        "geist-mono": ["var(--font-geist-mono)"],
+        sans: ["var(--font-geist-sans)"],
+        mono: ["var(--font-geist-mono)"],
       },
       colors: {
         // light mode
