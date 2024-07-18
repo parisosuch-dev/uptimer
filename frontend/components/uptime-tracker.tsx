@@ -28,8 +28,8 @@ export default async function UptimeTracker({
         status.is_up && status.response_time < 200
           ? "emerald"
           : status.is_up && status.response_time >= 200
-            ? "amber"
-            : "rose",
+          ? "amber"
+          : "rose",
       tooltip: status.response_time
         ? String(status.response_time) + " ms"
         : "down",
@@ -49,7 +49,7 @@ export default async function UptimeTracker({
         >
           {service.name}
         </Link>
-        <span className="text-tremor-content dark:text-dark-tremor-content">
+        <span className="text-tremor-content font-geist-mono">
           uptime {uptime}%
         </span>
       </p>
