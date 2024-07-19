@@ -9,7 +9,7 @@ export default async function Home() {
 
   return (
     <main className="flex flex-1 flex-col items-center space-y-2 w-full min-h-0 p-8">
-      <div className="w-1/2">
+      <div className="w-1/2 h-1/6">
         <ServersUpPercentage statuses={latestStatuses} />
       </div>
       <div className="w-1/2 h-5/6 space-y-2 overflow-y-scroll no-scrollbar">
