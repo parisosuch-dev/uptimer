@@ -1,6 +1,5 @@
 import { getServices, Service } from "@/lib/uptimer";
 import ServiceCard from "@/components/service-card";
-import { Button } from "@tremor/react";
 import AddServiceButton from "@/components/add-service";
 
 export default async function ServicesPage() {
