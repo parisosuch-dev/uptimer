@@ -25,6 +25,17 @@ export const getServices = async () => {
   return res.data;
 };
 
+export const getService = async (service: string) => {
+  let endpoint =
+    process.env.NEXT_PUBLIC_UPTIMER_ADDRESS + `/api/service/${service}/`;
+
+  console.log(`Hitting this endpoint: ${endpoint}`);
+
+  let res = await axios.get<Service>(endpoint);
+
+  return res.data;
+};
+
 interface StatusQueryParams {
   service?: string;
   start?: string;
