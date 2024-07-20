@@ -17,7 +17,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`}>
-      <body className="bg-gray-100 h-screen flex flex-col">
+      <body className="bg-gray-50 h-screen flex flex-col">
         <div className="w-full flex justify-between py-8 px-16">
           <Link href="/" className="text-2xl font-bold">
             uptimer.
