@@ -28,7 +28,6 @@ export default function ServicesPage({
               <p className="text-xs bg-gray-100 px-1 rounded-lg font-mono">
                 {service.hostname}
               </p>
-              {period}
             </div>
             <p className="text-sm text-gray-500">{service.description}</p>
           </div>
