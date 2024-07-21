@@ -1,8 +1,9 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { getService, Service } from "@/lib/uptimer";
+import { getService, getStatuses, Service, Status } from "@/lib/uptimer";
 import { Select, SelectItem } from "@tremor/react";
+import ServiceStats from "@/components/service-stats";
 
 export default function ServicesPage({
   params,
@@ -10,17 +11,42 @@ export default function ServicesPage({
   params: { serviceName: string };
 }) {
   const [service, setService] = useState<Service | null>(null);
+  const [statuses, setStatuses] = useState<Status[] | []>([]);
   const [period, setPeriod] = useState("w");
 
   getService(params.serviceName).then((res) => {
     setService(res);
   });
 
-  useEffect(() => {}, [period]);
+  const calculateStartDate = (period: string) => {
+    const today = new Date();
+    const start = new Date();
 
-  return (
-    <div className="flex flex-1 flex-col items-center p-8 w-full">
-      {service ? (
+    let days = 7;
+    if (period === "m") {
+      days = 30;
+    }
+    if (period === "d") {
+      days = 1;
+    }
+
+    start.setDate(today.getDate() - days);
+
+    return start.toISOString().split("T")[0];
+  };
+
+  useEffect(() => {
+    if (service) {
+      const start = calculateStartDate(period);
+      getStatuses({ service: service?.name, start: start }).then((res) =>
+        setStatuses(res)
+      );
+    }
+  }, [service, period]);
+
+  if (service) {
+    return (
+      <div className="flex flex-1 flex-col items-center p-8 w-full">
         <div className="w-1/2 flex flex-row items-center justify-end">
           <div className="w-3/4">
             <div className="flex flex-row items-center space-x-2">
@@ -39,9 +65,13 @@ export default function ServicesPage({
             </Select>
           </div>
         </div>
-      ) : (
-        <p>Loading...</p>
-      )}
+        <ServiceStats statuses={statuses} />
+      </div>
+    );
+  }
+  return (
+    <div className="flex flex-1 flex-col items-center p-8 w-full">
+      <h1 className="text-4xl text-gray-500 animate-pulse">Loading...</h1>
     </div>
   );
 }
