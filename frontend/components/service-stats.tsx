@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Service, Status, getStatuses } from "@/lib/uptimer";
 import { Card, LineChart } from "@tremor/react";
+import UptimeTracker from "./uptime-tracker";
 
 export default function ServiceStats({ service, period }: { service: Service, period: string }) {
   const [statuses, setStatuses] = useState<Status[] | []>([]);
