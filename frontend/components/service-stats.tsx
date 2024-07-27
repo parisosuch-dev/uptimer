@@ -2,13 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { Service, Status, getStatuses } from "@/lib/uptimer";
-import { Card } from "@tremor/react";
+import { Card, LineChart } from "@tremor/react";
 
 export default function ServiceStats({ service, period }: { service: Service, period: string }) {
   const [statuses, setStatuses] = useState<Status[] | []>([]);
   const [downTimes, setDownTimes] = useState(0);
   const [averageResponseTime, setAverageResponeTime] = useState(0.0);
   const [longestResponseTime, setLongestResponseTime] = useState(0);
+  const [chartStatuses, setChartStatuses] = useState<{ date: string, response: number }[] | []>([])
 
   const calculateStartDate = (period: string) => {
     const today = new Date();
@@ -32,6 +33,7 @@ export default function ServiceStats({ service, period }: { service: Service, pe
     setDownTimes(0); // reset down times
     let sum = 0.0;
     let longest = statuses[0].response_time
+    let chartData: { date: string, response: number }[] = [];
     statuses.forEach((status) => {
       if (!status.is_up) {
         setDownTimes(downTimes + 1);
@@ -39,10 +41,16 @@ export default function ServiceStats({ service, period }: { service: Service, pe
       if (status.response_time > longest) {
         longest = status.response_time;
       }
+      let chartDataPoint = {
+        date: new Date(status.time).toLocaleString(),
+        response: status.response_time
+      }
+      chartData.push(chartDataPoint);
       sum = sum + status.response_time;
     });
     setAverageResponeTime(sum / statuses.length);
     setLongestResponseTime(longest);
+    setChartStatuses(chartData.reverse());
   }
 
   useEffect(() => {
@@ -52,8 +60,8 @@ export default function ServiceStats({ service, period }: { service: Service, pe
   }, [period])
 
   return (
-    <div className="w-1/2 pt-8">
-      <div className="flex h-1/2 w-full space-x-2">
+    <div className="w-1/2 pt-8 space-y-4">
+      <div className="flex h-1/4 w-full space-x-2">
         <Card className="h-full w-full flex flex-col justify-center text-center">
           <div className="flex items-center justify-center h-full">
             <p className="text-2xl font-mono font-medium text-slate-700">
@@ -85,7 +93,7 @@ export default function ServiceStats({ service, period }: { service: Service, pe
           </div>
         </Card>
       </div>
-      <div className="flex h-1/2 w-full space-x-2 pt-4">
+      <div className="flex h-1/4 w-full space-x-2">
         <Card className="h-full w-full flex flex-col justify-center text-center">
           <div className="flex items-center justify-center h-full">
             <p className="text-2xl font-mono font-medium text-slate-700">
@@ -117,5 +125,12 @@ export default function ServiceStats({ service, period }: { service: Service, pe
           </div>
         </Card>
       </div>
+      <Card className="pt-4">
+        <LineChart
+          data={chartStatuses}
+          index="date"
+          categories={['response']}
+        />
+      </Card>
     </div>);
 }
