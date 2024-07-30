@@ -16,17 +16,20 @@ export default function ServiceStats({ service, period }: { service: Service, pe
     const today = new Date();
     const start = new Date();
 
-    let days = 7;
     if (period === "m") {
-      days = 30;
+      start.setDate(today.getDate() - 30);
     }
     if (period === "d") {
-      days = 1;
+      start.setDate(today.getDate() - 1);
+    }
+    if (period === "w") {
+      start.setDate(today.getDate() - 7);
+    }
+    if (period === "h") {
+      start.setTime(today.getTime() - (60 * 60 * 1000));
     }
 
-    start.setDate(today.getDate() - days);
-
-    return start.toISOString().split("T")[0];
+    return start.toISOString();
   };
 
   const handleStatusesData = (statuses: Status[]) => {

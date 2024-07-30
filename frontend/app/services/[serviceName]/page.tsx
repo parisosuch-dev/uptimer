@@ -11,7 +11,7 @@ export default function ServicesPage({
   params: { serviceName: string };
 }) {
   const [service, setService] = useState<Service | null>(null);
-  const [period, setPeriod] = useState("w");
+  const [period, setPeriod] = useState("h");
 
   useEffect(() => {
     getService(params.serviceName).then((res) => {
@@ -33,10 +33,11 @@ export default function ServicesPage({
             <p className="text-sm text-gray-500">{service.description}</p>
           </div>
           <div className="w-1/4 flex justify-end">
-            <Select defaultValue="w" name="period" onValueChange={setPeriod}>
+            <Select defaultValue="h" name="period" onValueChange={setPeriod}>
               <SelectItem value="m">Month</SelectItem>
               <SelectItem value="w">Week</SelectItem>
               <SelectItem value="d">Day</SelectItem>
+              <SelectItem value="h">Hour</SelectItem>
             </Select>
           </div>
         </div>
